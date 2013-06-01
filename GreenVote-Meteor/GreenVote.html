@@ -3,17 +3,23 @@
 </head>
 
 <body>
-  	Location Id: <input id="LocationId" type="text" value="51a927f6e4b03ccfaadc494d">
-	UserId: <input id="UserId" type ="text" value="51a94188e4b0f44ed339c30f">
+</br>
+{{> User}}
 </br>
 </br>
-	ParentId: <input id="ParentId" type="text">
-	Name of Child: <input id="ChildName0" type ="text">
-
-	{{> hello}}
+{{> Location}}
 </body>
 
-<template name="hello">
-  {{greeting}}
-  <input type="button" value="Click" />
+
+<template name="User">
+	UserId: <input id="UserId" type ="text" value="51a94188e4b0f44ed339c30f">
+	<input id="AssociateUser" type="button" value="Associate User"> 
+	<input id="GetLocations" type="submit" value="Get Locations for User">
+
+</template>
+
+<template name="Location">
+    Location Id: <input id="LocationId" type="text" value="51aa3335e4b086631d810145">
+    Name of Child: <input id="ChildName0" type ="text" value="Child">
+    <input id="MakeChild" type="submit" value="Make Child Location">
 </template>
