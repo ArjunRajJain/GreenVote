@@ -1,0 +1,76 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+
+
+  	Location Id: <input id="LocationId" type="text" value="51a927f6e4b03ccfaadc494c">
+	UserId: <input id="UserId" type ="text" value="51a94188e4b0f44ed339c30f">
+	<input id="UserLocation" type="submit" value="Associate User">
+</br>
+</br>
+
+	ParentId: <input id="ParentId" type="text">
+	Name of Child: <input id="ChildName0" type ="text">
+	<input id="addChild" type="submit" value ="Add Child">
+	<input id="MakeChild" type="submit" value="Make Child Location">
+
+
+<form>
+
+<script>
+	count =1;
+	console.log("Called");
+	function parse(str) {
+	    var args = [].slice.call(arguments, 1),
+	        i = 0;
+
+	    return str.replace(/%s/g, function() {
+	        return args[i++];
+	    });
+	}
+
+	$("#addChild").click(function() {
+		$('body').append(parse('<input id="ChildName%s" type ="text">', count));
+		count ++;
+	});
+
+	//Associating User with approriate location
+	$("#UserLocation").click(function() {
+		console.log( "http://api.grnvote.com/v1/user/"+String($("#UserId").val()));
+		$.ajax({
+		  type: "PUT",
+		  url: "http://api.grnvote.com/v1/user/"+String($("#UserId").val()),
+		  dataType : "json",
+		  headers: {"Content-Type":"application/json"}, 
+		  data: JSON.stringify({
+		  	locations: [String($("#LocationId").val())]
+		  }),
+		  success: function(data) {
+		  	console.log(data);
+		  }
+		});
+	});
+
+
+	//Make Child Locations for appropriate parent Id
+	$("#MakeChild").click(function() {
+		for(i = 0; i<count;i++) { 
+			console.log("hello");
+			$.ajax({
+			  type: "POST",
+			  url: "http://api.grnvote.com/v1/location",
+			  dataType : "json",
+			  headers: {"Content-Type":"application/json"}, 
+			  data: JSON.stringify({
+			  	parentId: String($("#ParentId").val()),
+			  	name: String($("#ChildName"+i).val())
+			  }),
+			  success: function(data) {
+			  	console.log(data);
+			  }
+			});
+		}
+	});
+
+
+
+	//Creating new location based on 
+</script>
